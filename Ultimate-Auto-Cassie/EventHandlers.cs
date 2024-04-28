@@ -22,7 +22,7 @@ namespace Ultimate_Auto_Cassie
         private void Onroundstarted()
         {
             Cassie.MessageTranslated(Config.Cassie, Config.MessageTranslated, Config.IsHeld, Config.isNoisy, Config.IsSubtitles);
-            Map.TurnOffAllLights(4F);
+            Map.TurnOffAllLights(Config.BlackOut);
             Console.WriteLine("Cassie message and TurnOffLight is okay");
         }
     }

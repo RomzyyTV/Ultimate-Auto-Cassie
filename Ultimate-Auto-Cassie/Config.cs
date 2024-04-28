@@ -22,5 +22,8 @@ namespace Ultimate_Auto_Cassie
 
         [Description("Is Subtitles")]
         public bool IsSubtitles { get; set; } = true;
+
+         [Description("time for the lights to go out")]
+         public float BlackOut { get; set; } = 4F;
     }
 }
