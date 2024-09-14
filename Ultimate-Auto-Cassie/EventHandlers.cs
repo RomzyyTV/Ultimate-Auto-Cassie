@@ -10,29 +10,11 @@ using Exiled.Events.EventArgs.Server;
 using MEC;
 using PlayerRoles;
 using UnityEngine;
+using Player = Exiled.Events.Handlers.Player;
 
 namespace Ultimate_Auto_Cassie;
-public class UltimateAutoCassie : Plugin<Config>
+public class EventHandlers
 {
-    public override string Name => "Ultimate-Auto-Cassie";
-    public override string Author => "By RomzyyTV";
-    public override Version Version => new Version(1, 0, 0);
-    public override Version RequiredExiledVersion { get; } = new(8, 11, 0);
-
-    public override void OnEnabled()
-    {
-        Exiled.Events.Handlers.Server.RoundStarted += OnRoundStarted;
-        Exiled.Events.Handlers.Server.RoundEnded += OnRoundEnded;
-        Exiled.Events.Handlers.Player.PickingUpItem += OnPicupItem;
-    }
-
-    public override void OnDisabled() 
-    {
-    Exiled.Events.Handlers.Server.RoundStarted -= OnRoundStarted;
-    Exiled.Events.Handlers.Server.RoundEnded -= OnRoundEnded;
-    Exiled.Events.Handlers.Player.PickingUpItem -= OnPicupItem;
-    }
-
     private CoroutineHandle _coroutine;
     public void OnRoundStarted()
     {
@@ -48,24 +30,23 @@ public class UltimateAutoCassie : Plugin<Config>
         Timing.KillCoroutines(_coroutine);
     }
 
-    private IEnumerator<float> Cassiee()
+    public IEnumerator<float> Cassiee()
     {
         Timing.WaitForSeconds(15f);
-        Cassie.MessageTranslated(Config.Cassie, Config.MessageTranslated, Config.IsHeld, Config.isNoisy, Config.IsSubtitles);
+        Cassie.MessageTranslated(Plugin.Singleton.Config.Cassie, Plugin.Singleton.Config.MessageTranslated, Plugin.Singleton.Config.IsHeld, Plugin.Singleton.Config.isNoisy, Plugin.Singleton.Config.IsSubtitles);
         Map.ChangeLightsColor(Color.blue);
         Timing.WaitForSeconds(8f);
         Map.ResetLightsColor();
         yield break;
     }
 
-    private void OnPicupItem(PickingUpItemEventArgs ev)
+    public void OnPicupItem(PickingUpItemEventArgs ev)
     {
         if (ev.Player.Role.Type is RoleTypeId.Scientist)
         {
             if (ev.Pickup.Type is ItemType.GunCrossvec or ItemType.GunFRMG0)
             {
-                ev.Player.ShowHint(
-                    "<b>Les <color=#f7ff00>scientifiques</color> ne peuvent pas prendre ce type d'armes.</b>", 4f);
+                ev.Player.ShowHint("<b>Les <color=#f7ff00>scientifiques</color> ne peuvent pas prendre ce type d'armes.</b>", 4f);
                 ev.IsAllowed = false;
             }
         }
