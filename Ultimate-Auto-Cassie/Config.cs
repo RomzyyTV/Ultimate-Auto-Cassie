@@ -22,8 +22,11 @@ namespace Ultimate_Auto_Cassie
 
         [Description("Is Subtitles")]
         public bool IsSubtitles { get; set; } = true;
-
-         [Description("time for the lights to go out")]
-         public float BlackOut { get; set; } = 4F;
+        
+        [Description("Timing wait before Cassie Message")]
+        public float CassieMessageDelay { get; set; } = 15f;
+        
+        [Description("Timing wait before Reset light color")]
+        public float TimingResetLightColor { get; set; } = 8f;
     }
 }
